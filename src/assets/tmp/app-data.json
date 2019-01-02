@@ -325,25 +325,22 @@
           ]
         },
         {
-          "text": "Extras",
-          "i18n": "menu.extras",
-          "link": "/extras",
+          "text": "Monitor",
+          "i18n": "menu.monitor",
+          "link": "/monitor",
           "icon": "anticon anticon-link",
           "children": [
             {
-              "text": "Help Center",
-              "link": "/extras/helpcenter",
-              "i18n": "menu.extras.helpcenter"
+              "text": "Druid Monitor",
+              "externalLink": "http://localhost:8080/api/druid/index.html",
+              "target": "_blank",
+              "i18n": "menu.monitor.druid"
             },
             {
-              "text": "Settings",
-              "link": "/extras/settings",
-              "i18n": "menu.extras.settings"
-            },
-            {
-              "text": "Poi",
-              "link": "/extras/poi",
-              "i18n": "menu.extras.poi"
+              "text": "Javamelody Monitor",
+              "externalLink": "http://localhost:8080/api/monitoring",
+              "target": "_blank",
+              "i18n": "menu.monitor.javamelody"
             }
           ]
         }
