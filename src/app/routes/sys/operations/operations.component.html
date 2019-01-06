@@ -7,7 +7,13 @@
   <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
   <st #st [data]="url" [columns]="columns" [req]="req" [res]="res" [expand]="expand" expandRowByClick>
     <ng-template #expand let-item let-index="index" let-column="column">
-      {{ item.message }}
+
+      <sv-container col="2">
+        <sv label="ClassName">{{item.classname}}</sv>
+        <sv label="Method">{{item.method}}</sv>
+        <sv col="1">{{ item.message }}</sv>
+      </sv-container>
+
     </ng-template>
   </st>
 </nz-card>
