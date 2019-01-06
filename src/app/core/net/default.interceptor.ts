@@ -114,7 +114,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         url = environment.SERVER_URL + url;
       }
     }
-
+    
     const newReq = req.clone({ url });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
