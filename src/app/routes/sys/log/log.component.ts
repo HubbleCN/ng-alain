@@ -17,9 +17,9 @@ export class SysLogComponent implements OnInit {
   url = `/sys/log/list`;
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      userId: {
         type: 'string',
-        title: '编号',
+        title: '用户ID',
       },
     },
   };
@@ -28,25 +28,26 @@ export class SysLogComponent implements OnInit {
     { title: '用户ID', index: 'userId' },
     { title: 'IP地址', index: 'ip' },
     { title: '地址', index: 'address' },
-    { title: '时间', type: 'date', index: 'createTime', sort: true },
+    {
+      title: '时间',
+      type: 'date',
+      index: 'createTime',
+      sort: true,
+      dateFormat: 'YYYY-MM-DD HH:mm:ss',
+    },
     { title: '信息', index: 'message' },
     {
       title: '类型',
       index: 'type',
       type: 'tag',
       tag: LOG_TYPE,
-      sort: true,
       filter: {
         menus: [
           { text: '登录成功', value: '登录成功' },
           { text: '登录失败', value: '登录失败' },
           { text: '退出登录', value: '退出登录' },
         ],
-        fn: (filter: any, record: any) => {
-          console.log(filter.value);
-          console.log(record.type);
-          return record.type === filter.value;
-        },
+        fn: (filter: any, record: any) => record.type === filter.value,
       },
     },
     {

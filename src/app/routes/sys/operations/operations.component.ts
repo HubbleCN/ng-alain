@@ -1,28 +1,52 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
+import { STColumn, STComponent, STReq, STRes, STColumnTag } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { type } from 'os';
 
+const SUCCESSED: STColumnTag = {
+  成功: { text: '成功', color: 'green' },
+  失败: { text: '失败', color: 'red' },
+};
 @Component({
   selector: 'app-sys-operations',
   templateUrl: './operations.component.html',
 })
 export class SysOperationsComponent implements OnInit {
-  url = `/user`;
+  url = `/sys/log/operations`;
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      userId: {
         type: 'string',
-        title: '编号',
+        title: '用户ID',
       },
     },
   };
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '用户ID', index: 'userId' },
+    {
+      title: '类型',
+      index: 'type',
+      filter: {
+        menus: [
+          { text: '异常日志', value: '异常日志' },
+          { text: '业务日志', value: '业务日志' },
+        ],
+        fn: (filter: any, record: any) => record.type === filter.value,
+      },
+    },
+    { title: '操作名称', index: 'name' },
+    { title: 'IP地址', index: 'ip' },
+    { title: '地址', index: 'address' },
+    {
+      title: '时间',
+      type: 'date',
+      index: 'createTime',
+      sort: true,
+      dateFormat: 'YYYY-MM-DD HH:mm:ss',
+    },
+    { title: '状态', index: 'success', type: 'tag', tag: SUCCESSED },
     {
       title: '',
       buttons: [
@@ -31,6 +55,18 @@ export class SysOperationsComponent implements OnInit {
       ],
     },
   ];
+
+  // 自定义请求数据
+  req: STReq = {
+    method: 'post',
+    reName: { pi: 'pageNum', ps: 'pageSize' },
+    allInBody: true,
+  };
+
+  // 自定义响应数据处理
+  res: STRes = {
+    reName: { total: 'total', list: 'data' },
+  };
 
   constructor(private http: _HttpClient, private modal: ModalHelper) {}
 

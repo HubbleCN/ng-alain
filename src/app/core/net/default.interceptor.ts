@@ -1,6 +1,14 @@
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse, HttpEvent, HttpResponseBase, HttpResponse } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpResponseBase,
+  HttpResponse,
+} from '@angular/common/http';
 import { Observable, of, throwError, observable } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
@@ -31,7 +39,7 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector) {}
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -46,12 +54,10 @@ export class DefaultInterceptor implements HttpInterceptor {
 
     if (ev instanceof HttpResponseBase) {
       const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-      this.injector.get(NzNotificationService).error(
-        `请求错误 ${ev.status}: ${ev.url}`,
-        errortext
-      );
+      this.injector
+        .get(NzNotificationService)
+        .error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
     }
-    
   }
 
   private handleData(ev: HttpResponseBase): Observable<any> {
@@ -69,19 +75,19 @@ export class DefaultInterceptor implements HttpInterceptor {
         //  正确内容：{ status: 0, response: {  } }
         // 则以下代码片断可直接适用
         if (ev instanceof HttpResponse && ev.url.includes('/api')) {
-            const body: any = ev.body;
-            if (body && body.code !== '0') {
-                this.msg.error(body.msg);
-                // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-                // this.http.get('/').subscribe() 并不会触发
-                // return throwError({});
-                return of(ev);
-            } else {
-                // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
-                // return of(new HttpResponse(Object.assign(ev, { body: body.data })));
-                // 或者依然保持完整的格式
-                return of(ev);
-            }
+          const body: any = ev.body;
+          if (body && body.code !== '0') {
+            this.msg.error(body.msg);
+            // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
+            // this.http.get('/').subscribe() 并不会触发
+            // return throwError({});
+            return of(ev);
+          } else {
+            // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
+            // return of(new HttpResponse(Object.assign(ev, { body: body.data })));
+            // 或者依然保持完整的格式
+            return of(ev);
+          }
         }
         break;
       case 401: // 未登录状态码
@@ -96,7 +102,10 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
       default:
         if (ev instanceof HttpErrorResponse) {
-          console.warn('未可知错误，大部分是由于后端不支持CORS或无效配置引起', ev);
+          console.warn(
+            '未可知错误，大部分是由于后端不支持CORS或无效配置引起',
+            ev,
+          );
           return throwError(ev);
         }
         break;
@@ -104,23 +113,25 @@ export class DefaultInterceptor implements HttpInterceptor {
     return of(ev);
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-       if (url.startsWith('assets/')) {
+      if (url.startsWith('assets/')) {
         url = `./${url}`;
       } else {
         url = environment.SERVER_URL + url;
       }
     }
-    
+
     const newReq = req.clone({ url });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理
-        if (event instanceof HttpResponseBase)
-          return this.handleData(event);
+        if (event instanceof HttpResponseBase) return this.handleData(event);
         // 若一切都正常，则后续操作
         return of(event);
       }),
