@@ -77,11 +77,18 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (ev instanceof HttpResponse && ev.url.includes('/api')) {
           const body: any = ev.body;
           if (body && body.code !== '0') {
-            this.msg.error(body.msg);
-            // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-            // this.http.get('/').subscribe() 并不会触发
-            // return throwError({});
-            return of(ev);
+            switch (body.code) {
+              case '302':
+                this.goTo(body.data);
+                break;
+              default:
+                this.msg.error(body.msg);
+                // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
+                // this.http.get('/').subscribe() 并不会触发
+                // return throwError({});
+                return of(ev);
+                break;
+            }
           } else {
             // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
             // return of(new HttpResponse(Object.assign(ev, { body: body.data })));
