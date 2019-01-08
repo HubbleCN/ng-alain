@@ -3,6 +3,20 @@
     <button (click)="add()" nz-button nzType="primary">新建</button>
   </ng-template>
 </page-header>
+
+<nz-card>
+  <sv-container col="2">
+    <sv label="地区">
+      <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)">
+      </nz-cascader>
+    </sv>
+  </sv-container>
+  <nz-tree #treeCom [nzData]="nodes" nzAsyncData="true" nzCheckable="true" nzMultiple="true" (nzClick)="nzClick($event)"
+    (nzSelectedKeysChange)="nzSelect($event)" (nzCheckBoxChange)="nzCheck($event)">
+  </nz-tree>
+</nz-card>
+
+
 <nz-card>
   <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
   <st #st [data]="url" [columns]="columns"></st>

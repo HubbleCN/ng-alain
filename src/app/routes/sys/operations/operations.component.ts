@@ -20,7 +20,10 @@ export class SysOperationsComponent implements OnInit {
         type: 'string',
         title: '用户ID',
       },
+      beginDate: { type: 'string', title: '开始时间', format: 'date' },
+      endDate: { type: 'string', title: '结束时间', format: 'date' },
     },
+    required: ['userId'],
   };
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
