@@ -31,13 +31,13 @@
             "children": [{
                 "text": "Access Log",
                 "i18n": "menu.log.access",
-                "link": "/system/log",
+                "link": "/system/log/logging",
                 "icon": "anticon anticon-cloud"
               },
               {
                 "text": "System Log",
                 "i18n": "menu.log.operations",
-                "link": "/system/operations",
+                "link": "/system/log/operations",
                 "icon": "anticon anticon-link"
               }
             ]

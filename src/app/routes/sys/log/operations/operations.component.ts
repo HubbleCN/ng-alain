@@ -2,30 +2,45 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, STReq, STRes, STColumnTag } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { type } from 'os';
 
-const LOG_TYPE: STColumnTag = {
-  登录成功: { text: '登录成功', color: 'green' },
-  登录失败: { text: '登录失败', color: 'red' },
-  退出登录: { text: '退出登录', color: '' },
+const SUCCESSED: STColumnTag = {
+  成功: { text: '成功', color: 'green' },
+  失败: { text: '失败', color: 'red' },
 };
-
 @Component({
-  selector: 'app-sys-log',
-  templateUrl: './log.component.html',
+  selector: 'app-sys-log-operations',
+  templateUrl: './operations.component.html',
 })
-export class SysLogComponent implements OnInit {
-  url = `/sys/log/list`;
+export class SysLogOperationsComponent implements OnInit {
+  url = `/sys/log/operations`;
+  pageSize: number = 20;
   searchSchema: SFSchema = {
     properties: {
       userId: {
         type: 'string',
         title: '用户ID',
       },
+      beginDate: { type: 'string', title: '开始时间', format: 'date' },
+      endDate: { type: 'string', title: '结束时间', format: 'date' },
     },
+    required: ['userId'],
   };
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '用户ID', index: 'userId' },
+    {
+      title: '类型',
+      index: 'type',
+      filter: {
+        menus: [
+          { text: '异常日志', value: '异常日志' },
+          { text: '业务日志', value: '业务日志' },
+        ],
+        fn: (filter: any, record: any) => record.type === filter.value,
+      },
+    },
+    { title: '操作名称', index: 'name' },
     { title: 'IP地址', index: 'ip' },
     { title: '地址', index: 'address' },
     {
@@ -35,21 +50,7 @@ export class SysLogComponent implements OnInit {
       sort: true,
       dateFormat: 'YYYY-MM-DD HH:mm:ss',
     },
-    { title: '信息', index: 'message' },
-    {
-      title: '类型',
-      index: 'type',
-      type: 'tag',
-      tag: LOG_TYPE,
-      filter: {
-        menus: [
-          { text: '登录成功', value: '登录成功' },
-          { text: '登录失败', value: '登录失败' },
-          { text: '退出登录', value: '退出登录' },
-        ],
-        fn: (filter: any, record: any) => record.type === filter.value,
-      },
-    },
+    { title: '状态', index: 'success', type: 'tag', tag: SUCCESSED },
     {
       title: '',
       buttons: [
@@ -73,9 +74,7 @@ export class SysLogComponent implements OnInit {
 
   constructor(private http: _HttpClient, private modal: ModalHelper) {}
 
-  ngOnInit() {
-    // this.http.post(`/sys/log/list`).subscribe(res => console.log(res));
-  }
+  ngOnInit() {}
 
   add() {
     // this.modal

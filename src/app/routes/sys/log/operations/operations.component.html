@@ -1,13 +1,7 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
 <nz-card>
   <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns" [req]="req" [res]="res" [expand]="expand" expandRowByClick>
+  <st #st [data]="url" [columns]="columns" [ps]="pageSize" [req]="req" [res]="res" [expand]="expand" expandRowByClick>
     <ng-template #expand let-item let-index="index" let-column="column">
-
       <sv-container col="2">
         <sv label="ClassName">{{item.classname}}</sv>
         <sv label="Method">{{item.method}}</sv>
