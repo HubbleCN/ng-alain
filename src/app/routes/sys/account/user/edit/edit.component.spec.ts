@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SysLogComponent } from './log.component';
+import { SysAccountUserEditComponent } from './edit.component';
 
-describe('SysLogComponent', () => {
-  let component: SysLogComponent;
-  let fixture: ComponentFixture<SysLogComponent>;
+describe('SysAccountUserEditComponent', () => {
+  let component: SysAccountUserEditComponent;
+  let fixture: ComponentFixture<SysAccountUserEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SysLogComponent ]
+      declarations: [ SysAccountUserEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SysLogComponent);
+    fixture = TestBed.createComponent(SysAccountUserEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

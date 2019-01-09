@@ -5,7 +5,7 @@ import { SFSchema } from '@delon/form';
 import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd';
 
 @Component({
-  selector: 'app-sys-user',
+  selector: 'app-sys-account-user',
   templateUrl: './user.component.html',
   styles: [
     `
@@ -15,7 +15,7 @@ import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd';
     `,
   ],
 })
-export class SysUserComponent implements OnInit {
+export class SysAccountUserComponent implements OnInit {
   url = `/user`;
 
   /** init data */

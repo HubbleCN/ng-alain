@@ -1,23 +1,30 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { SysRoutingModule } from './sys-routing.module';
-import { SysUserComponent } from './user/user.component';
-import { SysUserEditComponent } from './user/edit/edit.component';
-import { SysUserViewComponent } from './user/view/view.component';
-import { SysLogComponent } from './log/log/log.component';
+import { SysAccountUserComponent } from './account/user/user.component';
+import { SysAccountUserEditComponent } from './account/user/edit/edit.component';
+import { SysAccountUserViewComponent } from './account/user/view/view.component';
+import { SysLogLayoutComponent } from './log/layout/layout.component';
 import { SysLogOperationsComponent } from './log/operations/operations.component';
 import { SysLogLoggingComponent } from './log/logging/logging.component';
+import { SysAccountManagerComponent } from './account/manager/manager.component';
+import { SysAccountManagerEditComponent } from './account/manager/edit/edit.component';
+import { SysAccountManagerViewComponent } from './account/manager/view/view.component';
+import { SysAccountsLayoutComponent } from './account/layout/layout.component';
 
 const COMPONENTS = [
-  SysUserComponent,
-  SysLogComponent,
+  SysLogLayoutComponent,
+  SysLogLoggingComponent,
   SysLogOperationsComponent,
+  SysAccountsLayoutComponent,
+  SysAccountManagerComponent,
+  SysAccountUserComponent,
 ];
 const COMPONENTS_NOROUNT = [
-  SysUserEditComponent,
-  SysUserViewComponent,
-  SysLogLoggingComponent,
-];
+  SysAccountUserEditComponent,
+  SysAccountUserViewComponent,
+  SysAccountManagerEditComponent,
+  SysAccountManagerViewComponent];
 
 @NgModule({
   imports: [SharedModule, SysRoutingModule],

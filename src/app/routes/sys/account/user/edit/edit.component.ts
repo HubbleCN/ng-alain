@@ -4,10 +4,10 @@ import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
 
 @Component({
-  selector: 'sys-user-edit',
+  selector: 'app-account-sys-user-edit',
   templateUrl: './edit.component.html',
 })
-export class SysUserEditComponent implements OnInit {
+export class SysAccountUserEditComponent implements OnInit {
   record: any = {};
   i: any;
   schema: SFSchema = {

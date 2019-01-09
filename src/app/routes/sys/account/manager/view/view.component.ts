@@ -3,10 +3,10 @@ import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 
 @Component({
-  selector: 'sys-user-view',
+  selector: 'app-sys-account-manager-view',
   templateUrl: './view.component.html',
 })
-export class SysUserViewComponent implements OnInit {
+export class SysAccountManagerViewComponent implements OnInit {
   record: any = {};
   i: any;
 

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SysUserEditComponent } from './edit.component';
+import { SysLogLayoutComponent } from './layout.component';
 
-describe('SysUserEditComponent', () => {
-  let component: SysUserEditComponent;
-  let fixture: ComponentFixture<SysUserEditComponent>;
+describe('SysLogLayoutComponent', () => {
+  let component: SysLogLayoutComponent;
+  let fixture: ComponentFixture<SysLogLayoutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SysUserEditComponent ]
+      declarations: [ SysLogLayoutComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SysUserEditComponent);
+    fixture = TestBed.createComponent(SysLogLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

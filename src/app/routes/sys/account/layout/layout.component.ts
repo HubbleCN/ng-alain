@@ -4,19 +4,19 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-sys-log',
-  templateUrl: './log.component.html',
+  selector: 'app-sys-account-laout',
+  templateUrl: './layout.component.html',
 })
-export class SysLogComponent implements OnInit {
+export class SysAccountsLayoutComponent implements OnInit {
   private router$: Subscription;
   tabs: any[] = [
     {
-      key: 'logging',
-      tab: '登录日志',
+      key: 'user',
+      tab: '普通用户',
     },
     {
-      key: 'operations',
-      tab: '操作日志',
+      key: 'manager',
+      tab: '管理员',
     }
   ];
 
@@ -38,7 +38,7 @@ export class SysLogComponent implements OnInit {
   }
 
   to(item: any) {
-    this.router.navigateByUrl(`/system/log/${item.key}`);
+    this.router.navigateByUrl(`/system/account/${item.key}`);
   }
 
   ngOnDestroy() {
