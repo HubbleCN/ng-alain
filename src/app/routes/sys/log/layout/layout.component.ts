@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-sys-log-layout',
   templateUrl: './layout.component.html',
 })
-export class SysLogLayoutComponent implements OnInit {
+export class SysLogLayoutComponent implements OnInit, OnDestroy {
   private router$: Subscription;
   tabs: any[] = [
     {

@@ -22,18 +22,15 @@
             "text": "Account Management",
             "i18n": "menu.accounts",
             "link": "/system/account",
-            "icon": "anticon anticon-link",
             "children": [{
                 "text": "User",
                 "i18n": "menu.accounts.user",
-                "link": "/system/account/user",
-                "icon": "anticon anticon-cloud"
+                "link": "/system/account/user"
               },
               {
                 "text": "Manager",
                 "i18n": "menu.accounts.manager",
-                "link": "/system/account/manager",
-                "icon": "anticon anticon-link"
+                "link": "/system/account/manager"
               }
             ]
           },
@@ -41,18 +38,15 @@
             "text": "Log",
             "i18n": "menu.log",
             "link": "/system/log",
-            "icon": "anticon anticon-link",
             "children": [{
                 "text": "Logging Log",
                 "i18n": "menu.log.logging",
-                "link": "/system/log/logging",
-                "icon": "anticon anticon-cloud"
+                "link": "/system/log/logging"
               },
               {
                 "text": "System Log",
                 "i18n": "menu.log.operations",
-                "link": "/system/log/operations",
-                "icon": "anticon anticon-link"
+                "link": "/system/log/operations"
               }
             ]
           }

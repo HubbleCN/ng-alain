@@ -3,6 +3,7 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd';
+import { SysAccountUserEditComponent } from './edit/edit.component';
 
 @Component({
   selector: 'app-sys-account-user',
@@ -85,9 +86,9 @@ export class SysAccountUserComponent implements OnInit {
   }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(SysAccountUserEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
   }
 
   public onChanges(values: any): void {

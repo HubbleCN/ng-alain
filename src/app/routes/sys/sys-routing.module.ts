@@ -19,7 +19,7 @@ const routes: Routes = [
           { path: 'logging', component: SysLogLoggingComponent },
           { path: 'operations', component: SysLogOperationsComponent },
         ],
-      },
+      }
     ],
   },
   {

@@ -50,13 +50,13 @@ export class SysLogLoggingComponent implements OnInit {
         fn: (filter: any, record: any) => record.type === filter.value,
       },
     },
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ],
-    },
+    // {
+    //   title: '',
+    //   buttons: [
+    //     // { text: '查看', click: (item: any) => `/form/${item.id}` },
+    //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+    //   ],
+    // },
   ];
 
   // 自定义请求数据

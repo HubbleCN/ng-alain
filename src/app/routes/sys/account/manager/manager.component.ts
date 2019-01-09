@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { SysAccountManagerEditComponent } from './edit/edit.component';
 
 @Component({
-  selector: 'sys-manager',
+  selector: 'app-sys-account-manager',
   templateUrl: './manager.component.html',
 })
 export class SysAccountManagerComponent implements OnInit {
@@ -37,9 +38,9 @@ export class SysAccountManagerComponent implements OnInit {
   ngOnInit() { }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(SysAccountManagerEditComponent)
+      .subscribe(() => this.st.reload());
   }
 
 }
