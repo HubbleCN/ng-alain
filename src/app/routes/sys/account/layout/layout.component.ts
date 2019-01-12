@@ -2,12 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { _HttpClient } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-sys-account-laout',
   templateUrl: './layout.component.html',
 })
-export class SysAccountsLayoutComponent implements OnInit {
+export class SysAccountsLayoutComponent implements OnInit, OnDestroy {
   private router$: Subscription;
   tabs: any[] = [
     {
@@ -17,12 +19,12 @@ export class SysAccountsLayoutComponent implements OnInit {
     {
       key: 'manager',
       tab: '管理员',
-    }
+    },
   ];
 
   pos = 0;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: _HttpClient, public msg: NzMessageService) {}
 
   private setActive() {
     const key = this.router.url.substr(this.router.url.lastIndexOf('/') + 1);
@@ -39,6 +41,16 @@ export class SysAccountsLayoutComponent implements OnInit {
 
   to(item: any) {
     this.router.navigateByUrl(`/system/account/${item.key}`);
+  }
+
+  loadResources() {
+    this.http.post('/sys/resource/reload').subscribe((res: any) => {
+      if (res.msg === 'ok') {
+        this.msg.success('成功加载资源节点');
+      } else {
+        this.msg.success('加载失败');
+      }
+    });
   }
 
   ngOnDestroy() {

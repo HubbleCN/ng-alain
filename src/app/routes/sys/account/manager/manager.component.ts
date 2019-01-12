@@ -9,7 +9,7 @@ import { SysAccountManagerEditComponent } from './edit/edit.component';
   templateUrl: './manager.component.html',
 })
 export class SysAccountManagerComponent implements OnInit {
-  url = `/user`;
+  url = `/sys/account/user/list`;
   searchSchema: SFSchema = {
     properties: {
       no: {

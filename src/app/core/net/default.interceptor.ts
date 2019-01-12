@@ -11,7 +11,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError, observable } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
+import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
@@ -43,6 +43,10 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
+  }
+
+  get modal(): NzModalService {
+    return this.injector.get(NzModalService);
   }
 
   private goTo(url: string) {
@@ -80,6 +84,13 @@ export class DefaultInterceptor implements HttpInterceptor {
             switch (body.code) {
               case '302':
                 this.goTo(body.data);
+                break;
+              case '300004':
+                this.modal.warning({
+                  nzTitle: '温馨提示',
+                  nzContent: `${body.msg}`,
+                  nzOnOk: () => this.goTo('/passport/login')
+                });
                 break;
               default:
                 this.msg.error(body.msg);

@@ -3,7 +3,7 @@
   <ng-template #logo><img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"></ng-template>
   <ng-template #action>
     <nz-button-group>
-      <button nz-button>操作</button>
+      <button nz-button (click)="loadResources()">资源载入</button>
       <button nz-button>操作</button>
     </nz-button-group>
     <nz-dropdown class="mx-sm">
@@ -22,8 +22,6 @@
       <sv label="订购产品">XX 服务</sv>
       <sv label="创建时间">2017-07-07</sv>
       <sv label="关联单据"><a (click)="msg.success('yes')">12421</a></sv>
-      <sv label="生效日期">2017-07-07 ~ 2017-08-08</sv>
-      <sv label="备注">请于两个工作日内确认</sv>
     </sv-container>
   </ng-template>
   <ng-template #extra>

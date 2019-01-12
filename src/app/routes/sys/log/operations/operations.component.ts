@@ -18,7 +18,7 @@ export class SysLogOperationsComponent implements OnInit {
     properties: {
       userId: {
         type: 'string',
-        title: '用户ID',
+        title: '用户名',
       },
       beginDate: { type: 'string', title: '开始时间', format: 'date' },
       endDate: { type: 'string', title: '结束时间', format: 'date' },
@@ -27,7 +27,7 @@ export class SysLogOperationsComponent implements OnInit {
   };
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '用户ID', index: 'userId' },
+    { title: '用户名', index: 'userId' },
     {
       title: '类型',
       index: 'type',
