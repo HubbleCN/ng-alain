@@ -35,6 +35,11 @@
             ]
           },
           {
+            "text": "Role",
+            "i18n": "menu.role",
+            "link": "/system/role"
+          },
+          {
             "text": "Log",
             "i18n": "menu.log",
             "link": "/system/log",

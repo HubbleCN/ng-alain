@@ -6,6 +6,7 @@ import { SysLogLoggingComponent } from './log/logging/logging.component';
 import { SysAccountsLayoutComponent } from './account/layout/layout.component';
 import { SysAccountUserComponent } from './account/user/user.component';
 import { SysAccountManagerComponent } from './account/manager/manager.component';
+import { SysRoleRoleComponent } from './role/role/role.component';
 
 const routes: Routes = [
   { path: 'user', component: SysAccountUserComponent },
@@ -35,7 +36,7 @@ const routes: Routes = [
       },
     ],
   },
-];
+  { path: 'role', component: SysRoleRoleComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

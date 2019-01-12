@@ -77,6 +77,7 @@
   "menu.settings": "系统设置",
   "menu.log": "系统日志",
   "menu.log.logging": "登录日志",
+  "menu.role": "角色管理",
   "menu.log.operations": "操作日志",
   "app.analysis.test": "工专路 {{no}} 号店",
   "app.analysis.introduce": "指标说明",

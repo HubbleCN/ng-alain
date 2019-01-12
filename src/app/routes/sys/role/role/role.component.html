@@ -1,0 +1,24 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+
+<div nz-row nzGutter="24">
+  <div nz-col nzMd="24" nzLg="17">
+    <nz-card [nzBordered]="false">
+      <st #st [data]="url" [columns]="columns" [ps]="'0'" [req]="req" [res]="res"></st>
+    </nz-card>
+  </div>
+
+  <div nz-col nzMd="24" nzLg="6">
+    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!nodes"  [nzTitle]="role?role.roleDesc:'资源节点'" [nzExtra]="extraTemplate">
+      <ng-template #extraTemplate>
+          <a>编辑</a>
+        </ng-template>
+      <nz-tree #treeCom [nzData]="nodes" nzAsyncData="true" nzCheckable="false" nzMultiple="false" (nzClick)="nzClick($event)"
+      (nzSelectedKeysChange)="nzSelect($event)" (nzCheckBoxChange)="nzCheck($event)" nzExpandAll="true">
+    </nz-tree>
+    </nz-card>
+  </div>
+</div>

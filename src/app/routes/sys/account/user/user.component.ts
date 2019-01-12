@@ -5,17 +5,11 @@ import {
   STComponent,
   STReq,
   STRes,
-  STColumnTag,
   STColumnBadge,
 } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd';
 import { SysAccountUserEditComponent } from './edit/edit.component';
-
-const SUCCESSED: STColumnTag = {
-  成功: { text: '成功', color: 'green' },
-  失败: { text: '失败', color: 'red' },
-};
 
 const STATUS_BADGE: STColumnBadge = {
   '1': { text: '正常', color: 'success' },
@@ -133,7 +127,7 @@ export class SysAccountUserComponent implements OnInit {
   req: STReq = {
     method: 'post',
     reName: { pi: 'pageNum', ps: 'pageSize' },
-    params: { sysRoleIds: '2' },
+    params: { roleId: '2' },
     allInBody: true,
   };
 

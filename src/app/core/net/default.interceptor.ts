@@ -80,6 +80,11 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 则以下代码片断可直接适用
         if (ev instanceof HttpResponse && ev.url.includes('/api')) {
           const body: any = ev.body;
+
+          // 若返回体的值是数组类型，则强制不分页，这个是特例
+          if (body && body instanceof Array) {
+            return of(ev);
+          }
           if (body && body.code !== '0') {
             switch (body.code) {
               case '302':

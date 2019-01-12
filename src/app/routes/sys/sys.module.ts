@@ -11,6 +11,9 @@ import { SysAccountManagerComponent } from './account/manager/manager.component'
 import { SysAccountManagerEditComponent } from './account/manager/edit/edit.component';
 import { SysAccountManagerViewComponent } from './account/manager/view/view.component';
 import { SysAccountsLayoutComponent } from './account/layout/layout.component';
+import { SysRoleRoleComponent } from './role/role/role.component';
+import { SysRoleEditComponent } from './role/edit/edit.component';
+import { SysRoleViewComponent } from './role/view/view.component';
 
 const COMPONENTS = [
   SysLogLayoutComponent,
@@ -19,12 +22,14 @@ const COMPONENTS = [
   SysAccountsLayoutComponent,
   SysAccountManagerComponent,
   SysAccountUserComponent,
-];
+  SysRoleRoleComponent];
 const COMPONENTS_NOROUNT = [
   SysAccountUserEditComponent,
   SysAccountUserViewComponent,
   SysAccountManagerEditComponent,
-  SysAccountManagerViewComponent];
+  SysAccountManagerViewComponent,
+  SysRoleEditComponent,
+  SysRoleViewComponent];
 
 @NgModule({
   imports: [SharedModule, SysRoutingModule],

@@ -1,8 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
+import {
+  STColumn,
+  STComponent,
+  STReq,
+  STRes,
+  STColumnBadge,
+} from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { SysAccountManagerEditComponent } from './edit/edit.component';
+
+const STATUS_BADGE: STColumnBadge = {
+  '1': { text: '正常', color: 'success' },
+  '0': { text: '锁定', color: 'default' },
+};
 
 @Component({
   selector: 'app-sys-account-manager',
@@ -12,26 +23,81 @@ export class SysAccountManagerComponent implements OnInit {
   url = `/sys/account/user/list`;
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      userId: {
         type: 'string',
-        title: '编号'
-      }
-    }
+        title: '用户名',
+      },
+      beginDate: {
+        title: '起止日期',
+        type: 'string',
+        ui: { widget: 'date', end: 'endDate', format: 'YYYY-MM-DD' },
+      },
+      endDate: {
+        type: 'string',
+        format: 'YYYY-MM-DD',
+        ui: { widget: 'date', end: 'endDate', format: 'YYYY-MM-DD' },
+      },
+    },
+    // required: ['userId'],
   };
   @ViewChild('st') st: STComponent;
+
+  doSearch(event: any) {
+    this.st.reset(Object.assign(event, this.req.params));
+  }
+
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '序号', index: 'id' },
+    { title: '用户名', index: 'username' },
     {
-      title: '',
+      title: '手机号码',
+      index: 'mobile',
+      default: '-',
+    },
+    {
+      title: '邮箱',
+      index: 'email',
+      default: '-',
+    },
+    {
+      title: '用户昵称',
+      index: 'nickname',
+      default: '-',
+    },
+    {
+      title: '注册时间',
+      type: 'date',
+      index: 'registerTime',
+      sort: true,
+      dateFormat: 'YYYY-MM-DD HH:mm:ss',
+    },
+    {
+      title: '用户状态',
+      index: 'isValid',
+      type: 'badge',
+      badge: STATUS_BADGE
+    },
+    {
+      title: '操作区',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
+        { text: '查看', click: (item: any) => `/form/${item.id}` },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
+      ],
+    },
   ];
+
+  // 自定义请求数据
+  req: STReq = {
+    method: 'post',
+    reName: { pi: 'pageNum', ps: 'pageSize' },
+    params: { roleId: '0,1' },
+    allInBody: true,
+  };
+
+  // 自定义响应数据处理
+  res: STRes = {
+    reName: { total: 'total', list: 'data' },
+  };
 
   constructor(private http: _HttpClient, private modal: ModalHelper) { }
 
