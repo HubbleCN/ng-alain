@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, STReq, STRes } from '@delon/abc';
 import { SFSchema } from '@delon/form';
-import { NzTreeNodeOptions, NzFormatEmitEvent } from 'ng-zorro-antd';
+import { NzTreeNodeOptions, NzFormatEmitEvent, NzTreeNode, NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-sys-role',
@@ -51,30 +51,16 @@ export class SysRoleRoleComponent implements OnInit {
 
   nodes: NzTreeNodeOptions[];
 
+  editable = false;
   role: any;
 
-  nzClick(event: NzFormatEmitEvent): void {
-    console.log(
-      event,
-      event.selectedKeys,
-      event.keys,
-      event.nodes,
-      this.treeCom.getSelectedNodeList(),
-    );
-  }
-
-  nzCheck(event: NzFormatEmitEvent): void {
-    console.log(event, event.checkedKeys, event.keys, event.nodes);
-  }
-
-  // nzSelectedKeys change
-  nzSelect(keys: string[]): void {
-    console.log(keys, this.treeCom.getSelectedNodeList());
-  }
-
+  /**
+   * 查询角色权限
+   * @param item 角色
+   */
   loadPermissions(item?: any) {
     this.role = item;
-    this.http.post('/sys/role/resource/tree', {
+    this.http.post('/sys/role/permission/tree', {
         roleId: item ? item.id : null,
       }).subscribe((res: any) => {
         if (res instanceof Array) {
@@ -83,7 +69,35 @@ export class SysRoleRoleComponent implements OnInit {
       });
   }
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) {}
+  /**
+   * 保存角色权限
+   */
+  savePermissions() {
+    this.editable = false;
+    const checkedNodeList: Array<NzTreeNode> = this.treeCom.getCheckedNodeList();
+    console.log(checkedNodeList.map(i => i.key).join(','));
+    this.http.post('/sys/role/permission/update', {
+      id: this.role.id,
+      resourceIds: checkedNodeList.map(i => i.key).join(',')
+    }).subscribe((res: any) => {
+      if (res instanceof Array) {
+        this.nodes = res;
+      }
+    });
+  }
+
+  loadResources() {
+    this.http.post('/sys/role/permission/reset').subscribe((res: any) => {
+      if (res instanceof Array) {
+        this.nodes = res;
+        this.msg.success('成功加载资源节点');
+      } else {
+        this.msg.success('加载失败');
+      }
+    });
+  }
+
+  constructor(private http: _HttpClient, private modal: ModalHelper, public msg: NzMessageService) {}
 
   ngOnInit() {
     this.loadPermissions();

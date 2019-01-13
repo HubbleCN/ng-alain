@@ -20,8 +20,20 @@ export class SysLogOperationsComponent implements OnInit {
         type: 'string',
         title: '用户名',
       },
-      beginDate: { type: 'string', title: '开始时间', format: 'date' },
-      endDate: { type: 'string', title: '结束时间', format: 'date' },
+      name: {
+        type: 'string',
+        title: '操作名称',
+      },
+      beginDate: {
+        title: '起止日期',
+        type: 'string',
+        ui: { widget: 'date', end: 'endDate', format: 'YYYY-MM-DD' },
+      },
+      endDate: {
+        type: 'string',
+        format: 'YYYY-MM-DD',
+        ui: { widget: 'date', end: 'endDate', format: 'YYYY-MM-DD' },
+      },
     },
     required: ['userId'],
   };

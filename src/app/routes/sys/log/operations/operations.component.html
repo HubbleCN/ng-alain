@@ -1,10 +1,6 @@
 <nz-card>
-  <div class="mb-md">
-      <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  </div>
-  <div class="mb-md">
-    <button (click)="add()" nz-button [nzType]="'primary'"><i nz-icon type="plus"></i>新建</button>
-  </div>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+
   <st #st [data]="url" [columns]="columns" [ps]="'20'" [req]="req" [res]="res" [expand]="expand" expandRowByClick>
     <ng-template #expand let-item let-index="index" let-column="column">
       <sv-container col="2">

@@ -21,6 +21,16 @@ export class SysLogLoggingComponent implements OnInit {
         type: 'string',
         title: '用户ID',
       },
+      beginDate: {
+        title: '起止日期',
+        type: 'string',
+        ui: { widget: 'date', end: 'endDate', format: 'YYYY-MM-DD' },
+      },
+      endDate: {
+        type: 'string',
+        format: 'YYYY-MM-DD',
+        ui: { widget: 'date', end: 'endDate', format: 'YYYY-MM-DD' },
+      },
     },
   };
   @ViewChild('st') st: STComponent;

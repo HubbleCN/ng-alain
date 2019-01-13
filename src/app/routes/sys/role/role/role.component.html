@@ -1,6 +1,6 @@
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
+    <button (click)="loadResources()" nz-button nzType="primary">权限重置</button>
   </ng-template>
 </page-header>
 
@@ -12,13 +12,14 @@
   </div>
 
   <div nz-col nzMd="24" nzLg="6">
-    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!nodes"  [nzTitle]="role?role.roleDesc:'资源节点'" [nzExtra]="extraTemplate">
+    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!nodes" [nzTitle]="role?role.roleDesc:'资源节点'" [nzExtra]="extraTemplate">
       <ng-template #extraTemplate>
-          <a>编辑</a>
-        </ng-template>
-      <nz-tree #treeCom [nzData]="nodes" nzAsyncData="true" nzCheckable="false" nzMultiple="false" (nzClick)="nzClick($event)"
-      (nzSelectedKeysChange)="nzSelect($event)" (nzCheckBoxChange)="nzCheck($event)" nzExpandAll="true">
-    </nz-tree>
+        <a (click)="editable = !editable" *ngIf="role && !editable">编辑</a>
+
+        <a class="ml-md" (click)="savePermissions()" *ngIf="role && editable">保存</a>
+      </ng-template>
+      <nz-tree #treeCom [nzData]="nodes" nzAsyncData="true" [nzCheckable]="editable" nzMultiple="false" nzExpandAll="true">
+      </nz-tree>
     </nz-card>
   </div>
 </div>
