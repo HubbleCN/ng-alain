@@ -141,13 +141,7 @@ export class SysAccountUserComponent implements OnInit {
   ngOnInit() {
     this.http.get('assets/tmp/city.json').subscribe((res: any) => {
       this.nzOptions = res;
-    }),
-      this.http.post('/rs/res/tree').subscribe((res: any) => {
-        if (res.msg !== 'ok') {
-          return;
-        }
-        this.nodes = res.data;
-      });
+    });
   }
 
   add() {

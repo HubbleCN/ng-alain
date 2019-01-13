@@ -9,6 +9,7 @@ import {
 } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { SysAccountManagerEditComponent } from './edit/edit.component';
+import { NzMessageService } from 'ng-zorro-antd';
 
 const STATUS_BADGE: STColumnBadge = {
   '1': { text: '正常', color: 'success' },
@@ -80,8 +81,7 @@ export class SysAccountManagerComponent implements OnInit {
     {
       title: '操作区',
       buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        { text: '编辑', click: (item: any) => this.add(item) },
       ],
     },
   ];
@@ -99,14 +99,19 @@ export class SysAccountManagerComponent implements OnInit {
     reName: { total: 'total', list: 'data' },
   };
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, public msg: NzMessageService) { }
 
   ngOnInit() { }
 
-  add() {
+  add(manager?: any) {
+    // this.modal
+    //   .createStatic(SysAccountManagerEditComponent)
+    //   .subscribe(() => this.st.reload());
     this.modal
-      .createStatic(SysAccountManagerEditComponent)
-      .subscribe(() => this.st.reload());
+    .static(SysAccountManagerEditComponent, manager ? {i: manager} : null)
+    .subscribe(() => {
+      this.st.load();
+    });
   }
 
 }

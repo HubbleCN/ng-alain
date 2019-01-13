@@ -12,28 +12,30 @@ export class SysAccountManagerEditComponent implements OnInit {
   i: any;
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
+      id: { type: 'string', title: '编号' },
+      username: { type: 'string', title: '用户名', minLength: 4, maxLength: 15, readOnly: this.i },
+      mobile: { type: 'string', title: '手机号', minLength: 11, maxLength: 11},
+      email: { type: 'string', title: '邮箱地址', format: 'email'},
+      password: { type: 'string', title: '登录密码', maxLength: 20 },
     },
-    required: ['owner', 'callNo', 'href', 'description'],
+    required: ['username'],
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
       grid: { span: 12 },
     },
-    $no: {
-      widget: 'text'
+    $id: {
+      widget: 'text',
     },
-    $href: {
+    $username: {
       widget: 'string',
+      placeholder: '请输入用户名'
     },
-    $description: {
-      widget: 'textarea',
-      grid: { span: 24 },
+    $password: {
+      widget: 'string',
+      type: 'password',
+      placeholder: '默认密码是123123'
     },
   };
 
@@ -44,12 +46,14 @@ export class SysAccountManagerEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+
   }
 
   save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
+    this.http.post(`/sys/account/manager/save`, value).subscribe((res: any) => {
+      if (res.msg !== 'ok') {
+        return;
+      }
       this.msgSrv.success('保存成功');
       this.modal.close(true);
     });
