@@ -10,6 +10,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, of, throwError, observable } from 'rxjs';
+
 import { mergeMap, catchError } from 'rxjs/operators';
 import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
@@ -41,8 +42,8 @@ const CODEMESSAGE = {
 export class DefaultInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
-  get msg(): NzMessageService {
-    return this.injector.get(NzMessageService);
+  private get notification(): NzNotificationService {
+    return this.injector.get(NzNotificationService);
   }
 
   get modal(): NzModalService {
@@ -54,13 +55,13 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private checkStatus(ev: HttpResponseBase) {
-    if (ev.status >= 200 && ev.status < 300) return;
+    if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
+      return;
+    }
 
     if (ev instanceof HttpResponseBase) {
       const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-      this.injector
-        .get(NzNotificationService)
-        .error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
+      this.injector.get(NzNotificationService).error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
     }
   }
 
@@ -94,7 +95,7 @@ export class DefaultInterceptor implements HttpInterceptor {
                 this.modal.warning({
                   nzTitle: '温馨提示',
                   nzContent: `${body.msg}`,
-                  nzOnOk: () => this.goTo('/passport/login')
+                  nzOnOk: () => this.goTo('/passport/login'),
                 });
                 break;
               default:
@@ -113,8 +114,9 @@ export class DefaultInterceptor implements HttpInterceptor {
           }
         }
         break;
-      case 401: // 未登录状态码
-        // 请求错误 401: https://preview.pro.ant.design/api/401 用户没有权限（令牌、用户名、密码错误）。
+      case 401:
+        this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
+        // 清空 token 信息
         (this.injector.get(DA_SERVICE_TOKEN) as ITokenService).clear();
         this.goTo('/passport/login');
         break;
@@ -125,10 +127,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
       default:
         if (ev instanceof HttpErrorResponse) {
-          console.warn(
-            '未可知错误，大部分是由于后端不支持CORS或无效配置引起',
-            ev,
-          );
+          console.warn('未可知错误，大部分是由于后端不支持CORS或无效配置引起', ev);
           return throwError(ev);
         }
         break;
@@ -136,10 +135,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     return of(ev);
   }
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {

@@ -1,9 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { STColumn } from '@delon/abc';
 import { getTimeDistance } from '@delon/util';
@@ -58,11 +53,6 @@ export class DashboardAnalysisComponent implements OnInit {
     },
   ];
 
-  saleTabs: any[] = [
-    { key: 'sales', showBar: true },
-    { key: 'visits' },
-  ];
-
   constructor(
     private http: _HttpClient,
     public msg: NzMessageService,
@@ -107,6 +97,19 @@ export class DashboardAnalysisComponent implements OnInit {
     return yuan(value);
   }
 
-  _activeTab = 0;
-  _tabChange(value: any) {}
+  saleTabs: any[] = [{ key: 'sales', show: true }, { key: 'visits' }];
+  salesChange(idx: number) {
+    if (this.saleTabs[idx].show !== true) {
+      this.saleTabs[idx].show = true;
+      this.cdr.detectChanges();
+    }
+  }
+
+  offlineIdx = 0;
+  offlineChange(idx: number) {
+    if (this.data.offlineData[idx].show !== true) {
+      this.data.offlineData[idx].show = true;
+      this.cdr.detectChanges();
+    }
+  }
 }

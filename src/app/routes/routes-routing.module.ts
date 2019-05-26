@@ -55,9 +55,7 @@ const routes: Routes = [
   {
     path: 'data-v',
     component: LayoutFullScreenComponent,
-    children: [
-      { path: '', loadChildren: './data-v/data-v.module#DataVModule' },
-    ],
+    children: [{ path: '', loadChildren: './data-v/data-v.module#DataVModule' }],
   },
   // passport
   {

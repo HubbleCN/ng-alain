@@ -28,6 +28,7 @@ interface LangData {
   zorro: any;
   dateFns: any;
   delon: any;
+  abbr: string;
 }
 
 const DEFAULT = 'zh-CN';
@@ -38,6 +39,7 @@ const LANGS: { [key: string]: LangData } = {
     zorro: zh_CN,
     dateFns: df_zh_cn,
     delon: delonZhCn,
+    abbr: '🇨🇳',
   },
   'zh-TW': {
     text: '繁体中文',
@@ -45,6 +47,7 @@ const LANGS: { [key: string]: LangData } = {
     zorro: zh_TW,
     dateFns: df_zh_tw,
     delon: delonZhTw,
+    abbr: '🇭🇰',
   },
   'en-US': {
     text: 'English',
@@ -52,16 +55,18 @@ const LANGS: { [key: string]: LangData } = {
     zorro: en_US,
     dateFns: df_en,
     delon: delonEnUS,
+    abbr: '🇬🇧',
   },
 };
 
 @Injectable({ providedIn: 'root' })
 export class I18NService implements AlainI18NService {
   private _default = DEFAULT;
-  private change$ = new BehaviorSubject<string>(null);
+  private change$ = new BehaviorSubject<string | null>(null);
 
   private _langs = Object.keys(LANGS).map(code => {
-    return { code, text: LANGS[code].text };
+    const item = LANGS[code];
+    return { code, text: item.text, abbr: item.abbr };
   });
 
   constructor(
@@ -88,7 +93,7 @@ export class I18NService implements AlainI18NService {
   }
 
   get change(): Observable<string> {
-    return this.change$.asObservable().pipe(filter(w => w != null));
+    return this.change$.asObservable().pipe(filter(w => w != null)) as Observable<string>;
   }
 
   use(lang: string): void {
@@ -111,10 +116,6 @@ export class I18NService implements AlainI18NService {
   }
   /** 当前语言 */
   get currentLang() {
-    return (
-      this.translate.currentLang ||
-      this.translate.getDefaultLang() ||
-      this._default
-    );
+    return this.translate.currentLang || this.translate.getDefaultLang() || this._default;
   }
 }
