@@ -46,6 +46,10 @@ export class DefaultInterceptor implements HttpInterceptor {
     return this.injector.get(NzNotificationService);
   }
 
+  get msg(): NzMessageService {
+    return this.injector.get(NzMessageService);
+  }
+
   get modal(): NzModalService {
     return this.injector.get(NzModalService);
   }
