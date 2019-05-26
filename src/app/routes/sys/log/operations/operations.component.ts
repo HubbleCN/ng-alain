@@ -40,6 +40,8 @@ export class SysLogOperationsComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '用户名', index: 'userId' },
+    { title: '系统', index: 'sysName', sort: true },
+    { title: '线程', index: 'threadName' },
     {
       title: '类型',
       index: 'type',

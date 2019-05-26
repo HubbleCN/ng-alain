@@ -364,13 +364,13 @@
           "icon": "anticon anticon-link",
           "children": [{
               "text": "Druid Monitor",
-              "externalLink": "http://localhost:8080/api/druid/index.html",
+              "externalLink": "http://localhost:8081/mweb/druid/index.html",
               "target": "_blank",
               "i18n": "menu.monitor.druid"
             },
             {
               "text": "Javamelody Monitor",
-              "externalLink": "http://localhost:8080/api/monitoring",
+              "externalLink": "http://localhost:8081/mweb/monitoring",
               "target": "_blank",
               "i18n": "menu.monitor.javamelody"
             }

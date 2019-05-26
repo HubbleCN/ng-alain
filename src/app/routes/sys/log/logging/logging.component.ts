@@ -36,8 +36,9 @@ export class SysLogLoggingComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '用户ID', index: 'userId' },
+    { title: '系统', index: 'sysName', sort: true },
+    { title: '线程', index: 'threadName' },
     { title: 'IP地址', index: 'ip' },
-    { title: '地址', index: 'address' },
     {
       title: '时间',
       type: 'date',

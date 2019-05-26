@@ -2,7 +2,11 @@
   <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
   <st #st [data]="url" [columns]="columns" [req]="req" [res]="res" [expand]="expand" expandRowByClick>
     <ng-template #expand let-item let-index="index" let-column="column">
-      {{ item.agent }}
+        <sv-container col="2">
+            <sv label="地址">{{item.address}}</sv>
+            <sv col="1">{{ item.agent }}</sv>
+        </sv-container>
+
     </ng-template>
   </st>
 </nz-card>

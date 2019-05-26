@@ -43,16 +43,6 @@ export class SysAccountsLayoutComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/system/account/${item.key}`);
   }
 
-  loadResources() {
-    this.http.post('/sys/resource/reload').subscribe((res: any) => {
-      if (res.msg === 'ok') {
-        this.msg.success('成功加载资源节点');
-      } else {
-        this.msg.success('加载失败');
-      }
-    });
-  }
-
   ngOnDestroy() {
     this.router$.unsubscribe();
   }

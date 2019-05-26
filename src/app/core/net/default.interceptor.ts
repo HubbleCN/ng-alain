@@ -78,7 +78,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         //  错误内容：{ status: 1, msg: '非法参数' }
         //  正确内容：{ status: 0, response: {  } }
         // 则以下代码片断可直接适用
-        if (ev instanceof HttpResponse && ev.url.includes('/api')) {
+        if (ev instanceof HttpResponse && ev.url.includes(environment.SERVER_URL.substr(1))) {
           const body: any = ev.body;
 
           // 若返回体的值是数组类型，则强制不分页，这个是特例

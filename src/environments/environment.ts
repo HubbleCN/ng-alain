@@ -4,7 +4,7 @@
 
 export const environment = {
   // SERVER_URL: `./`,
-  SERVER_URL: `./api`,
+  SERVER_URL: `./mweb`, // 服务文根
   production: false,
   useHash: true,
   hmr: false,
