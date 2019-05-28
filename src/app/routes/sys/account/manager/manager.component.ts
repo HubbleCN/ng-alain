@@ -1,12 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import {
-  STColumn,
-  STComponent,
-  STReq,
-  STRes,
-  STColumnBadge,
-} from '@delon/abc';
+import { STColumn, STComponent, STReq, STRes, STColumnBadge } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { SysAccountManagerEditComponent } from './edit/edit.component';
 import { NzMessageService } from 'ng-zorro-antd';
@@ -21,7 +15,7 @@ const STATUS_BADGE: STColumnBadge = {
   templateUrl: './manager.component.html',
 })
 export class SysAccountManagerComponent implements OnInit {
-  url = `/sys/account/user/list`;
+  url = `/sys/account/manager/list`;
   searchSchema: SFSchema = {
     properties: {
       userId: {
@@ -76,13 +70,11 @@ export class SysAccountManagerComponent implements OnInit {
       title: '用户状态',
       index: 'isValid',
       type: 'badge',
-      badge: STATUS_BADGE
+      badge: STATUS_BADGE,
     },
     {
       title: '操作区',
-      buttons: [
-        { text: '编辑', click: (item: any) => this.add(item) },
-      ],
+      buttons: [{ text: '编辑', click: (item: any) => this.add(item) }],
     },
   ];
 
@@ -99,19 +91,16 @@ export class SysAccountManagerComponent implements OnInit {
     reName: { total: 'total', list: 'data' },
   };
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, public msg: NzMessageService) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, public msg: NzMessageService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   add(manager?: any) {
     // this.modal
     //   .createStatic(SysAccountManagerEditComponent)
     //   .subscribe(() => this.st.reload());
-    this.modal
-    .static(SysAccountManagerEditComponent, manager ? {i: manager} : null)
-    .subscribe(() => {
+    this.modal.static(SysAccountManagerEditComponent, manager ? { i: manager } : null).subscribe(() => {
       this.st.load();
     });
   }
-
 }

@@ -12,13 +12,19 @@
   </div>
 
   <div nz-col nzMd="24" nzLg="6">
-    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!nodes" [nzTitle]="role?role.roleDesc:'资源节点'" [nzExtra]="extraTemplate">
+    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!nodes" [nzTitle]="role?role.roleDesc:'资源节点'"
+      [nzExtra]="extraTemplate">
       <ng-template #extraTemplate>
         <a (click)="editable = !editable" *ngIf="role && !editable">编辑</a>
 
         <a class="ml-md" (click)="savePermissions()" *ngIf="role && editable">保存</a>
       </ng-template>
-      <nz-tree #treeCom [nzData]="nodes" nzAsyncData="true" [nzCheckable]="editable" nzMultiple="false" nzExpandAll="true">
+      <nz-tree #treeCom [nzData]="nodes" nzAsyncData="true" [nzCheckable]="editable" nzMultiple="false"
+        nzExpandAll="true">
+        <ng-template #nzTreeTemplate let-node>
+          <span>{{ node.title }} <i *ngIf="node.isChecked" class="tree-node-checked" nz-icon nzType="check"
+              nzTheme="outline"></i></span>
+        </ng-template>
       </nz-tree>
     </nz-card>
   </div>

@@ -46,16 +46,12 @@ export class SysLogOperationsComponent implements OnInit {
       title: '类型',
       index: 'type',
       filter: {
-        menus: [
-          { text: '异常日志', value: '异常日志' },
-          { text: '业务日志', value: '业务日志' },
-        ],
+        menus: [{ text: '异常日志', value: '异常日志' }, { text: '业务日志', value: '业务日志' }],
         fn: (filter: any, record: any) => record.type === filter.value,
       },
     },
     { title: '操作名称', index: 'name' },
     { title: 'IP地址', index: 'ip' },
-    { title: '地址', index: 'address' },
     {
       title: '时间',
       type: 'date',
