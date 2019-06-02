@@ -17,6 +17,8 @@ import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
+const SUCCESS_CODE = '1';
+
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -80,8 +82,8 @@ export class DefaultInterceptor implements HttpInterceptor {
       case 200:
         // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
         // 例如响应内容：
-        //  错误内容：{ status: 1, msg: '非法参数' }
-        //  正确内容：{ status: 0, response: {  } }
+        //  错误内容：{ status: 0, msg: '非法参数' }
+        //  正确内容：{ status: 1, response: {  } }
         // 则以下代码片断可直接适用
         if (ev instanceof HttpResponse && ev.url.includes(environment.SERVER_URL.substr(1))) {
           const body: any = ev.body;
@@ -90,7 +92,7 @@ export class DefaultInterceptor implements HttpInterceptor {
           if (body && body instanceof Array) {
             return of(ev);
           }
-          if (body && body.code !== '0') {
+          if (body && body.code !== SUCCESS_CODE) {
             switch (body.code) {
               case '302':
                 this.goTo(body.data);
