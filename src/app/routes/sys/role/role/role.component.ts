@@ -19,8 +19,8 @@ export class SysRoleRoleComponent implements OnInit {
   // roleName: 'admin';
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
-    { title: '角色类型', index: 'roleName' },
-    { title: '角色描述', index: 'roleDesc' },
+    { title: '角色类型', index: 'name' },
+    { title: '角色描述', index: 'description' },
     {
       title: '更多操作',
       width: '200px',
@@ -60,9 +60,11 @@ export class SysRoleRoleComponent implements OnInit {
    */
   loadPermissions(item?: any) {
     this.role = item;
-    this.http.post('/sys/role/permission/tree', {
+    this.http
+      .post('/sys/role/permission/tree', {
         roleId: item ? item.id : null,
-      }).subscribe((res: any) => {
+      })
+      .subscribe((res: any) => {
         if (res instanceof Array) {
           this.nodes = res;
         }
@@ -76,14 +78,16 @@ export class SysRoleRoleComponent implements OnInit {
     this.editable = false;
     const checkedNodeList: Array<NzTreeNode> = this.treeCom.getCheckedNodeList();
     console.log(checkedNodeList.map(i => i.key).join(','));
-    this.http.post('/sys/role/permission/update', {
-      id: this.role.id,
-      resourceIds: checkedNodeList.map(i => i.key).join(',')
-    }).subscribe((res: any) => {
-      if (res instanceof Array) {
-        this.nodes = res;
-      }
-    });
+    this.http
+      .post('/sys/role/permission/update', {
+        id: this.role.id,
+        resourceIds: checkedNodeList.map(i => i.key).join(','),
+      })
+      .subscribe((res: any) => {
+        if (res instanceof Array) {
+          this.nodes = res;
+        }
+      });
   }
 
   loadResources() {

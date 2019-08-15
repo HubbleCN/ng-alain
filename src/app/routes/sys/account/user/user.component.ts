@@ -1,19 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import {
-  STColumn,
-  STComponent,
-  STReq,
-  STRes,
-  STColumnBadge,
-} from '@delon/abc';
+import { STColumn, STComponent, STReq, STRes, STColumnBadge } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd';
 import { SysAccountUserEditComponent } from './edit/edit.component';
 
 const STATUS_BADGE: STColumnBadge = {
-  '1': { text: '正常', color: 'success' },
-  '0': { text: '锁定', color: 'default' },
+  NORMAL: { text: '正常', color: 'success' },
+  LOCKED: { text: '锁定', color: 'error' },
+  DISABLE: { text: '销号', color: 'default' },
 };
 
 @Component({
@@ -39,13 +34,7 @@ export class SysAccountUserComponent implements OnInit {
   nodes: NzTreeNodeOptions[] = [];
 
   nzClick(event: NzFormatEmitEvent): void {
-    console.log(
-      event,
-      event.selectedKeys,
-      event.keys,
-      event.nodes,
-      this.treeCom.getSelectedNodeList(),
-    );
+    console.log(event, event.selectedKeys, event.keys, event.nodes, this.treeCom.getSelectedNodeList());
   }
 
   nzCheck(event: NzFormatEmitEvent): void {
@@ -88,7 +77,7 @@ export class SysAccountUserComponent implements OnInit {
     { title: '用户名', index: 'username' },
     {
       title: '手机号码',
-      index: 'mobile',
+      index: 'phone',
       default: '-',
     },
     {
@@ -104,15 +93,15 @@ export class SysAccountUserComponent implements OnInit {
     {
       title: '注册时间',
       type: 'date',
-      index: 'registerTime',
+      index: 'createTime',
       sort: true,
       dateFormat: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '用户状态',
-      index: 'isValid',
+      index: 'status',
       type: 'badge',
-      badge: STATUS_BADGE
+      badge: STATUS_BADGE,
     },
     {
       title: '操作区',
@@ -127,7 +116,7 @@ export class SysAccountUserComponent implements OnInit {
   req: STReq = {
     method: 'post',
     reName: { pi: 'pageNum', ps: 'pageSize' },
-    params: { roleId: '2' },
+    // params: { roleId: '2' },
     allInBody: true,
   };
 
@@ -145,9 +134,7 @@ export class SysAccountUserComponent implements OnInit {
   }
 
   add() {
-    this.modal
-      .createStatic(SysAccountUserEditComponent, { i: { id: 0 } })
-      .subscribe(() => this.st.reload());
+    this.modal.createStatic(SysAccountUserEditComponent, { i: { id: 0 } }).subscribe(() => this.st.reload());
   }
 
   public onChanges(values: any): void {

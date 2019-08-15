@@ -1,13 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent, STReq, STRes, STColumnTag } from '@delon/abc';
+import { STColumn, STComponent, STReq, STRes, STColumnTag, STColumnBadge } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { type } from 'os';
 
-const SUCCESSED: STColumnTag = {
-  成功: { text: '成功', color: 'green' },
-  失败: { text: '失败', color: 'red' },
+const STATUS: STColumnTag = {
+  OK: { text: '成功', color: 'green' },
+  FAIL: { text: '失败', color: 'red' },
 };
+
+const TYPE_BADGE: STColumnBadge = {
+  0: { text: '默认', color: 'success' },
+  1: { text: '异常', color: 'error' },
+};
+
 @Component({
   selector: 'app-sys-log-operations',
   templateUrl: './operations.component.html',
@@ -39,16 +45,18 @@ export class SysLogOperationsComponent implements OnInit {
   };
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '用户名', index: 'userId' },
+    { title: '用户名', index: 'createUser' },
     { title: '系统', index: 'sysName', sort: true },
     { title: '线程', index: 'threadName' },
     {
       title: '类型',
       index: 'type',
       filter: {
-        menus: [{ text: '异常日志', value: '异常日志' }, { text: '业务日志', value: '业务日志' }],
+        menus: [{ text: '其他', value: '0' }, { text: '异常', value: '1' }],
         fn: (filter: any, record: any) => record.type === filter.value,
       },
+      type: 'badge',
+      badge: TYPE_BADGE,
     },
     { title: '操作名称', index: 'name' },
     { title: 'IP地址', index: 'ip' },
@@ -59,7 +67,7 @@ export class SysLogOperationsComponent implements OnInit {
       sort: true,
       dateFormat: 'YYYY-MM-DD HH:mm:ss',
     },
-    { title: '状态', index: 'success', type: 'tag', tag: SUCCESSED },
+    { title: '状态', index: 'status', type: 'tag', tag: STATUS },
     // {
     //   title: '',
     //   buttons: [

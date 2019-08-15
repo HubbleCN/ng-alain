@@ -6,7 +6,7 @@ import { SFSchema } from '@delon/form';
 const LOG_TYPE: STColumnTag = {
   登录成功: { text: '登录成功', color: 'green' },
   登录失败: { text: '登录失败', color: 'red' },
-  退出登录: { text: '退出登录', color: '' },
+  退出登录: { text: '退出登录', color: 'blue' },
 };
 
 @Component({
@@ -35,7 +35,7 @@ export class SysLogLoggingComponent implements OnInit {
   };
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '用户ID', index: 'userId' },
+    { title: '用户ID', index: 'createUser' },
     { title: '系统', index: 'sysName', sort: true },
     { title: '线程', index: 'threadName' },
     { title: 'IP地址', index: 'ip' },

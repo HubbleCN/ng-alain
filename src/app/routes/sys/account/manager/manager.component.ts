@@ -6,8 +6,9 @@ import { SysAccountManagerEditComponent } from './edit/edit.component';
 import { NzMessageService } from 'ng-zorro-antd';
 
 const STATUS_BADGE: STColumnBadge = {
-  '1': { text: '正常', color: 'success' },
-  '0': { text: '锁定', color: 'default' },
+  NORMAL: { text: '正常', color: 'success' },
+  LOCKED: { text: '锁定', color: 'error' },
+  DISABLE: { text: '销号', color: 'default' },
 };
 
 @Component({
@@ -46,7 +47,7 @@ export class SysAccountManagerComponent implements OnInit {
     { title: '用户名', index: 'username' },
     {
       title: '手机号码',
-      index: 'mobile',
+      index: 'phone',
       default: '-',
     },
     {
@@ -62,13 +63,13 @@ export class SysAccountManagerComponent implements OnInit {
     {
       title: '注册时间',
       type: 'date',
-      index: 'registerTime',
+      index: 'createTime',
       sort: true,
       dateFormat: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '用户状态',
-      index: 'isValid',
+      index: 'status',
       type: 'badge',
       badge: STATUS_BADGE,
     },
@@ -82,7 +83,7 @@ export class SysAccountManagerComponent implements OnInit {
   req: STReq = {
     method: 'post',
     reName: { pi: 'pageNum', ps: 'pageSize' },
-    params: { roleId: '0,1' },
+    // params: { roleId: '0,1' },
     allInBody: true,
   };
 

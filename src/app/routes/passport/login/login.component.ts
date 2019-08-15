@@ -107,6 +107,7 @@ export class UserLoginComponent implements OnDestroy {
         type: this.type,
         userName: this.userName.value,
         password: this.password.value,
+        loginType: 'Admin',
       })
       .subscribe((res: any) => {
         if (res.msg !== 'ok') {
@@ -123,7 +124,7 @@ export class UserLoginComponent implements OnDestroy {
           if (url.includes('/passport')) url = '/';
           this.router.navigateByUrl(url);
         });
-      }) ;
+      });
   }
 
   // #region social
