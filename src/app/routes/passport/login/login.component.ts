@@ -57,6 +57,9 @@ export class UserLoginComponent implements OnDestroy {
   get captcha() {
     return this.form.controls.captcha;
   }
+  get rememberMe() {
+    return this.form.controls.remember;
+  }
 
   // #endregion
 
@@ -107,6 +110,7 @@ export class UserLoginComponent implements OnDestroy {
         type: this.type,
         userName: this.userName.value,
         password: this.password.value,
+        rememberMe: this.rememberMe.value,
         loginType: 'Admin',
       })
       .subscribe((res: any) => {

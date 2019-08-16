@@ -4,12 +4,11 @@
   <st #st [data]="url" [columns]="columns" [ps]="'20'" [req]="req" [res]="res" [expand]="expand" expandRowByClick>
     <ng-template #expand let-item let-index="index" let-column="column">
       <sv-container col="2">
-        <sv label="类">{{item.classname}}</sv>
-        <sv label="方法">{{item.method}}</sv>
-        <sv label="地址">{{item.address}}</sv>
-        <sv col="1" label="信息">{{ item.message }}</sv>
+        <sv label="类">{{ item.classname }}</sv>
+        <sv label="方法">{{ item.method }}</sv>
+        <sv label="地址">{{ item.address }}</sv>
+        <sv col="1" label="信息" [innerHtml]="item.message"></sv>
       </sv-container>
-
     </ng-template>
   </st>
 </nz-card>
