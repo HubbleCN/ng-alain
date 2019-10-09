@@ -5,13 +5,13 @@ import { SFSchema } from '@delon/form';
 import { type } from 'os';
 
 const STATUS: STColumnTag = {
-  OK: { text: '成功', color: 'green' },
-  FAIL: { text: '失败', color: 'red' },
+  '1': { text: '成功', color: 'green' },
+  '0': { text: '失败', color: 'red' },
 };
 
 const TYPE_BADGE: STColumnBadge = {
-  0: { text: '默认', color: 'success' },
-  1: { text: '异常', color: 'error' },
+  '0': { text: '默认', color: 'success' },
+  '1': { text: '异常', color: 'error' },
 };
 
 @Component({

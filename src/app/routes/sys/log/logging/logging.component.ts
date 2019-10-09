@@ -4,9 +4,9 @@ import { STColumn, STComponent, STReq, STRes, STColumnTag } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 
 const LOG_TYPE: STColumnTag = {
-  登录成功: { text: '登录成功', color: 'green' },
-  登录失败: { text: '登录失败', color: 'red' },
-  退出登录: { text: '退出登录', color: 'blue' },
+  '1': { text: '登录成功', color: 'green' },
+  '2': { text: '登录失败', color: 'red' },
+  '3': { text: '退出登录', color: 'blue' },
 };
 
 @Component({

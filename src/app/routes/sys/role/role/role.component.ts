@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, STReq, STRes } from '@delon/abc';
 import { SFSchema } from '@delon/form';
-import { NzTreeNodeOptions, NzFormatEmitEvent, NzTreeNode, NzMessageService } from 'ng-zorro-antd';
+import { NzTreeNodeOptions, NzFormatEmitEvent, NzTreeNode, NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { SysRoleEditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-sys-role',
@@ -26,7 +27,9 @@ export class SysRoleRoleComponent implements OnInit {
       width: '200px',
       className: 'text-center',
       buttons: [
-        { text: '权限详情', click: (item: any) => this.loadPermissions(item) },
+        { text: '编辑', click: (item: any) => this.openEdit(item) },
+        { text: '权限', click: (item: any) => this.loadPermissions(item) },
+        { text: '删除', click: (item: any) => this.remove(item) },
         // { text: '重新分配', click: (item: any) => `/form/${item.id}` },
       ],
     },
@@ -53,6 +56,13 @@ export class SysRoleRoleComponent implements OnInit {
 
   editable = false;
   role: any;
+
+  constructor(
+    private http: _HttpClient,
+    private modal: ModalHelper,
+    public msg: NzMessageService,
+    private modalSrv: NzModalService,
+  ) {}
 
   /**
    * 查询角色权限
@@ -101,7 +111,14 @@ export class SysRoleRoleComponent implements OnInit {
     });
   }
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, public msg: NzMessageService) {}
+  openEdit(record: any = {}) {
+    this.modal.create(SysRoleEditComponent, { record }, { size: 'md' }).subscribe(res => {
+      console.log(res);
+      if (res) {
+        this.st.reload();
+      }
+    });
+  }
 
   ngOnInit() {
     this.loadPermissions();
@@ -111,5 +128,14 @@ export class SysRoleRoleComponent implements OnInit {
     // this.modal
     //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());
+  }
+
+  remove(record: any) {
+    this.modalSrv.confirm({
+      nzTitle: '确认删除？',
+      nzOnOk: () => {
+        this.msg.success('删除接口待添加!');
+      },
+    });
   }
 }

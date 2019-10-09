@@ -7,7 +7,7 @@
         <sv label="类">{{ item.classname }}</sv>
         <sv label="方法">{{ item.method }}</sv>
         <sv label="地址">{{ item.address }}</sv>
-        <sv col="1" label="信息" [innerHtml]="item.message"></sv>
+        <sv col="1" label="信息"><span [innerHTML]="item.message"></span></sv>
       </sv-container>
     </ng-template>
   </st>

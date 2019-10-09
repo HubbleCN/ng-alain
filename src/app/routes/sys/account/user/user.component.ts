@@ -6,9 +6,9 @@ import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd';
 import { SysAccountUserEditComponent } from './edit/edit.component';
 
 const STATUS_BADGE: STColumnBadge = {
-  NORMAL: { text: '正常', color: 'success' },
-  LOCKED: { text: '锁定', color: 'error' },
-  DISABLE: { text: '销号', color: 'default' },
+  '1': { text: '正常', color: 'success' },
+  '2': { text: '锁定', color: 'error' },
+  '3': { text: '销号', color: 'default' },
 };
 
 @Component({
@@ -46,7 +46,7 @@ export class SysAccountUserComponent implements OnInit {
     console.log(keys, this.treeCom.getSelectedNodeList());
   }
 
-  url = `/sys/account/user/list`;
+  url = `/sys/user/list`;
   searchSchema: SFSchema = {
     properties: {
       userId: {

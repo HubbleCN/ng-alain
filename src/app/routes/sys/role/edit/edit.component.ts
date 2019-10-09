@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'sys-role-edit',
@@ -12,24 +14,28 @@ export class SysRoleEditComponent implements OnInit {
   i: any;
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
+      id: { type: 'string', title: '角色编号', readOnly: true },
+      name: { type: 'string', title: '角色名称', maxLength: 64 },
+      pid: { type: 'number', title: '父级角色' },
+      sort: { type: 'number', title: '排序编号', minimum: 0 },
+      description: { type: 'string', title: '角色描述', maxLength: 140 },
+      creatTime: { type: 'string', title: '创建时间', ui: { widget: 'date', hidden: true } },
+      updateTime: { type: 'string', title: '更新时间', ui: { widget: 'date', hidden: true } },
+      creatUser: { type: 'string', title: '创建人', ui: { hidden: true } },
+      updateUser: { type: 'string', title: '更新人', ui: { hidden: true } },
     },
-    required: ['owner', 'callNo', 'href', 'description'],
+    required: ['id', 'name', 'description'],
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
       grid: { span: 12 },
     },
-    $no: {
-      widget: 'text'
+    $id: {
+      widget: 'text',
     },
-    $href: {
-      widget: 'string',
+    $sort: {
+      widget: 'number',
     },
     $description: {
       widget: 'textarea',
@@ -37,20 +43,20 @@ export class SysRoleEditComponent implements OnInit {
     },
   };
 
-  constructor(
-    private modal: NzModalRef,
-    private msgSrv: NzMessageService,
-    public http: _HttpClient,
-  ) {}
+  constructor(private modal: NzModalRef, private msgSrv: NzMessageService, public http: _HttpClient) {}
 
   ngOnInit(): void {
     if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+      this.http.get(`/sys/role/${this.record.id}`).subscribe(res => {
+        console.log(res);
+        if (res.msg !== 'ok') return;
+        this.i = res.data;
+      });
   }
 
   save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
+    if (!value) return;
+    this.http.post(`/sys/role/reset`, value).subscribe(res => {
       this.modal.close(true);
     });
   }

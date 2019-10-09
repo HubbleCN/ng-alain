@@ -6,9 +6,9 @@ import { SysAccountManagerEditComponent } from './edit/edit.component';
 import { NzMessageService } from 'ng-zorro-antd';
 
 const STATUS_BADGE: STColumnBadge = {
-  NORMAL: { text: '正常', color: 'success' },
-  LOCKED: { text: '锁定', color: 'error' },
-  DISABLE: { text: '销号', color: 'default' },
+  '1': { text: '正常', color: 'success' },
+  '2': { text: '锁定', color: 'error' },
+  '3': { text: '销号', color: 'default' },
 };
 
 @Component({
@@ -16,7 +16,7 @@ const STATUS_BADGE: STColumnBadge = {
   templateUrl: './manager.component.html',
 })
 export class SysAccountManagerComponent implements OnInit {
-  url = `/sys/account/manager/list`;
+  url = `/sys/manager/list`;
   searchSchema: SFSchema = {
     properties: {
       userId: {
